@@ -24,7 +24,7 @@ Delivery Driver is a simple Unity game where you take on the role of a delivery 
 2. Press Play to start the game.
 3. Use the controls to pick up and deliver packages.
 
-** Or **
+Or
 
 start the game from the folder in Build 1.1
 press Alt + F4 to close the game
