@@ -8,6 +8,7 @@ TagManager:
   - Package
   - DeleverySpot
   - Boost
+  - Road
   layers:
   - Default
   - TransparentFX

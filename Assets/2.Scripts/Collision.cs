@@ -8,7 +8,7 @@ public class Collision : MonoBehaviour
 
     SpriteRenderer spriteRenderer;
     Driver driver;
-
+    [SerializeField] GameManager gameManager;
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -24,6 +24,9 @@ public class Collision : MonoBehaviour
             }
         }
     }
+
+    
+
     void OnCollisionEnter2D(Collision2D collision)
     {
         Debug.Log(gameObject.name +": Collision detected with: " + collision.gameObject.name);
@@ -31,6 +34,7 @@ public class Collision : MonoBehaviour
         {
             Debug.Log("player has hit an object");
             driver.hitObject();
+            gameManager.AddScore(-5f);
         }
     }
     void OnTriggerEnter2D(Collider2D collision)
@@ -42,25 +46,32 @@ public class Collision : MonoBehaviour
             hasPackage = true;
             Debug.Log("package has been picked up");
             Destroy(collision.gameObject);
+            gameManager.startTimer();
         }
         if(collision.tag == "DeleverySpot" && hasPackage)
         {
-            hasPackage = false;
-            Debug.Log("player has delevered the package");
-            resetColor();
-        }
-        if(collision.tag == "Obstacle")
-        {
-            Debug.Log("player has hit an obstacle");
+            if (spriteRenderer.color == collision.gameObject.GetComponent<SpriteRenderer>().color)
+            {
+                gameManager.packageDelivered(); ;
+                Debug.Log("player has delivered the package");
+                hasPackage = false;
+                Debug.Log("player has delevered the package");
+                resetColor();
+            }
+            else
+            {
+                Debug.Log("Wrong Delevery Spot");
+            }
+            
         }
         if(collision.tag == "Boost" && gameObject.tag == "Player")
         {
             Debug.Log("player has Hit A Boost");
             driver.hitBoost();
         }
-        
 
     }
+    
     void changeColor(Color32 color)
     {
         spriteRenderer.color = color;
@@ -69,4 +80,5 @@ public class Collision : MonoBehaviour
     {
         spriteRenderer.color = new Color32(255, 255, 255, 255);  
     }
+
 }
